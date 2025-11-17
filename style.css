@@ -96,6 +96,23 @@ h1 {
   content: "";
 }
 
+.linha-jogo {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.local-icon {
+  margin: 0 4px;
+  color: #e74c3c;
+}
+
+.versus {
+  font-weight: bold;
+  color: #34495e;
+}
+
+
 
 .escalados {
   margin-top: 10px;
