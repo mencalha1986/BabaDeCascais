@@ -94,9 +94,10 @@
 
         jogosDia.forEach((jogo, idx) => {
           const card = document.createElement("div");
-          card.className = "jogo";
-          card.textContent = `${jogo.hora} @ ${jogo.local} 
-                              | vs ${jogo.adversario}`;
+      card.className = "jogo";
+      card.innerHTML = `<span><strong>${jogo.hora}</strong> 📍 ${jogo.local} | vs ${jogo.adversario}</span>`;
+
+
         
           const esc = document.createElement("div");
           esc.className = "escalados";
