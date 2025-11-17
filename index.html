@@ -2,28 +2,68 @@
 <html>
 <head>
   <title>Baba de Cascais</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Agenda de Jogos</h1>
+
+  <!-- Dropdown para selecionar o time -->
+  <select id="timeSelect">
+    <option value="">Selecione um time</option>
+  </select>
+
   <div id="jogos"></div>
 
   <script>
-    fetch("https://babadecascais.blob.core.windows.net/baba/jogos.json")
-      .then(res => res.json())
-      .then(data => {
-        const div = document.getElementById("jogos");
-        data.times.forEach(time => {
-          const h2 = document.createElement("h2");
-          h2.textContent = time.nome;
-          div.appendChild(h2);
+    let dadosGlobal = null;
 
-          time.jogos.forEach(jogo => {
-            const p = document.createElement("p");
-            p.textContent = `${jogo.data} - ${jogo.hora} @ ${jogo.local} | Escalados: ${jogo.escalados.join(", ")}`;
-            div.appendChild(p);
-          });
-        });
+    async function carregar() {
+      const resp = await fetch("https://babadecascais.blob.core.windows.net/baba/jogos.json");
+      dadosGlobal = await resp.json();
+
+      const select = document.getElementById("timeSelect");
+      dadosGlobal.times.forEach(time => {
+        const opt = document.createElement("option");
+        opt.value = time.nome;
+        opt.textContent = time.nome;
+        select.appendChild(opt);
       });
+
+      select.addEventListener("change", () => {
+        mostrarJogos(select.value);
+      });
+    }
+
+    function mostrarJogos(nomeTime) {
+      const div = document.getElementById("jogos");
+      div.innerHTML = "";
+
+      const time = dadosGlobal.times.find(t => t.nome === nomeTime);
+      if (!time) return;
+
+      time.jogos.forEach((jogo, index) => {
+        const card = document.createElement("div");
+        card.className = "jogo";
+        card.innerHTML = `
+          <strong>${jogo.data}</strong>
+          <span>${jogo.hora} @ ${jogo.local}</span>
+          <div class="escalados" id="escalados-${index}">
+            <h4>Escalados:</h4>
+            <ul>${jogo.escalados.map(j => `<li>${j}</li>`).join("")}</ul>
+          </div>
+        `;
+
+        // evento de clique para abrir/fechar escalados
+        card.addEventListener("click", () => {
+          const esc = card.querySelector(".escalados");
+          esc.style.display = esc.style.display === "block" ? "none" : "block";
+        });
+
+        div.appendChild(card);
+      });
+    }
+
+    carregar();
   </script>
 </body>
 </html>
