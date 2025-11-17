@@ -107,6 +107,12 @@ h1 {
   color: #e74c3c;
 }
 
+.pin-icon {
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+
 .versus {
   font-weight: bold;
   color: #34495e;
