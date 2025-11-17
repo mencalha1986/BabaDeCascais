@@ -21,6 +21,32 @@ h1 {
   border: 1px solid #ccc;
 }
 
+.calendar-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.calendar-nav button {
+  padding: 8px 12px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 6px;
+  background: #2980b9;
+  color: #fff;
+  cursor: pointer;
+}
+
+.calendar-nav button:hover {
+  background: #1f6391;
+}
+
+.calendar-nav span {
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -35,7 +61,6 @@ h1 {
   min-height: 120px;
   padding: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  position: relative;
 }
 
 .day-number {
