@@ -8,7 +8,7 @@
   <div id="jogos"></div>
 
   <script>
-    fetch("https://<sua-storage>.blob.core.windows.net/baba/baba.json")
+    fetch("https://babadecascais.blob.core.windows.net/baba/jogos.json")
       .then(res => res.json())
       .then(data => {
         const div = document.getElementById("jogos");
