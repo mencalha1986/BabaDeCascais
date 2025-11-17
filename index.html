@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Babel de Cascais</title>
+</head>
+<body>
+  <h1>Agenda de Jogos</h1>
+  <div id="jogos"></div>
+
+  <script>
+    fetch("https://<sua-storage>.blob.core.windows.net/baba/baba.json")
+      .then(res => res.json())
+      .then(data => {
+        const div = document.getElementById("jogos");
+        data.times.forEach(time => {
+          const h2 = document.createElement("h2");
+          h2.textContent = time.nome;
+          div.appendChild(h2);
+
+          time.jogos.forEach(jogo => {
+            const p = document.createElement("p");
+            p.textContent = `${jogo.data} - ${jogo.hora} @ ${jogo.local} | Escalados: ${jogo.escalados.join(", ")}`;
+            div.appendChild(p);
+          });
+        });
+      });
+  </script>
+</body>
+</html>
