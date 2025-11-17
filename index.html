@@ -95,7 +95,11 @@
         jogosDia.forEach((jogo, idx) => {
           const card = document.createElement("div");
       card.className = "jogo";
-      card.innerHTML = `<span><strong>${jogo.hora}</strong> 📍 ${jogo.local} | vs ${jogo.adversario}</span>`;
+      card.innerHTML = `
+        <span class="linha-jogo">
+          <strong>${jogo.hora}</strong> <span class="local-icon">📍</span> ${jogo.local} | <span class="versus">vs ${jogo.adversario}</span>
+        </span>
+      `;
 
 
         
