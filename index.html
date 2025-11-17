@@ -7,12 +7,11 @@
 <body>
   <h1>Agenda de Jogos</h1>
 
-  <!-- Dropdown para selecionar o time -->
   <select id="timeSelect">
     <option value="">Selecione um time</option>
   </select>
 
-  <div id="jogos"></div>
+  <div class="calendar" id="calendar"></div>
 
   <script>
     let dadosGlobal = null;
@@ -30,37 +29,57 @@
       });
 
       select.addEventListener("change", () => {
-        mostrarJogos(select.value);
+        montarCalendario(select.value);
       });
     }
 
-    function mostrarJogos(nomeTime) {
-      const div = document.getElementById("jogos");
-      div.innerHTML = "";
+    function montarCalendario(nomeTime) {
+      const calendar = document.getElementById("calendar");
+      calendar.innerHTML = "";
+
+      const hoje = new Date();
+      const ano = hoje.getFullYear();
+      const mes = hoje.getMonth(); // mês atual
+
+      const primeiroDia = new Date(ano, mes, 1);
+      const ultimoDia = new Date(ano, mes + 1, 0);
+      const diasNoMes = ultimoDia.getDate();
 
       const time = dadosGlobal.times.find(t => t.nome === nomeTime);
       if (!time) return;
 
-      time.jogos.forEach((jogo, index) => {
-        const card = document.createElement("div");
-        card.className = "jogo";
-        card.innerHTML = `
-          <strong>${jogo.data}</strong>
-          <span>${jogo.hora} @ ${jogo.local}</span>
-          <div class="escalados" id="escalados-${index}">
-            <h4>Escalados:</h4>
-            <ul>${jogo.escalados.map(j => `<li>${j}</li>`).join("")}</ul>
-          </div>
-        `;
+      for (let dia = 1; dia <= diasNoMes; dia++) {
+        const cell = document.createElement("div");
+        cell.className = "day";
 
-        // evento de clique para abrir/fechar escalados
-        card.addEventListener("click", () => {
-          const esc = card.querySelector(".escalados");
-          esc.style.display = esc.style.display === "block" ? "none" : "block";
+        const num = document.createElement("div");
+        num.className = "day-number";
+        num.textContent = dia;
+        cell.appendChild(num);
+
+        // procurar jogos nesse dia
+        const dataStr = `${ano}-${String(mes+1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
+        const jogosDia = time.jogos.filter(j => j.data === dataStr);
+
+        jogosDia.forEach((jogo, idx) => {
+          const card = document.createElement("div");
+          card.className = "jogo";
+          card.textContent = `${jogo.hora} @ ${jogo.local}`;
+
+          const esc = document.createElement("div");
+          esc.className = "escalados";
+          esc.innerHTML = `<h4>Escalados:</h4><ul>${jogo.escalados.map(p => `<li>${p}</li>`).join("")}</ul>`;
+          card.appendChild(esc);
+
+          card.addEventListener("click", () => {
+            esc.style.display = esc.style.display === "block" ? "none" : "block";
+          });
+
+          cell.appendChild(card);
         });
 
-        div.appendChild(card);
-      });
+        calendar.appendChild(cell);
+      }
     }
 
     carregar();
