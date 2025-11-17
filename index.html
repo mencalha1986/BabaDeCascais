@@ -93,19 +93,22 @@
         jogosDia.forEach((jogo, idx) => {
           const card = document.createElement("div");
           card.className = "jogo";
-          card.textContent = `${jogo.hora} @ ${jogo.local}`;
-
+          card.textContent = `${jogo.hora} @ ${jogo.local} 
+                              | vs ${jogo.adversario}`;
+        
           const esc = document.createElement("div");
           esc.className = "escalados";
-          esc.innerHTML = `<h4>Escalados:</h4><ul>${jogo.escalados.map(p => `<li>${p}</li>`).join("")}</ul>`;
+          esc.innerHTML = `<h4>Escalados:</h4>
+                           <ul>${jogo.escalados.map(p => `<li>${p}</li>`).join("")}</ul>`;
           card.appendChild(esc);
-
+        
           card.addEventListener("click", () => {
             esc.style.display = esc.style.display === "block" ? "none" : "block";
           });
-
+        
           cell.appendChild(card);
         });
+
 
         calendar.appendChild(cell);
       }
