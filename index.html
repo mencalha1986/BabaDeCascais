@@ -158,16 +158,37 @@
               adversarioModal = ` | vs ${jogo.adversario}`;
             }
             
-            modalBody.innerHTML = `
-              <h2>${jogo.hora} 📍 ${jogo.local}${adversarioModal}</h2>
-              <h4>Escalados:</h4>
-              <ul>${jogo.escalados.map(p => `<li>${p}</li>`).join("")}</ul>
-              <div class="estatisticas">
-                ${golsHtml}
-                ${assistHtml}
-                ${cartoesHtml}
-              </div>
-            `;
+            let adversarioModal = "";
+              if (nomeTime !== "Baba Semanal" && jogo.adversario) {
+                adversarioModal = ` | vs ${jogo.adversario}`;
+              }
+              
+              // se for Baba Semanal, monta blocos separados para cada time
+              let timesEscolhidosHtml = "";
+              if (nomeTime === "Baba Semanal" && jogo.timesEscolhidos?.length) {
+                timesEscolhidosHtml = `
+                  <h4>Times Escolhidos:</h4>
+                  ${jogo.timesEscolhidos.map(t => `
+                    <div class="time-escolhido">
+                      <strong>${t.nomeTime}</strong>
+                      <ul>${t.jogadores.map(j => `<li>${j}</li>`).join("")}</ul>
+                    </div>
+                  `).join("")}
+                `;
+              }
+              
+              modalBody.innerHTML = `
+                <h2>${jogo.hora} 📍 ${jogo.local}${adversarioModal}</h2>
+                <h4>Escalados:</h4>
+                <ul>${jogo.escalados.map(p => `<li>${p}</li>`).join("")}</ul>
+                ${timesEscolhidosHtml}
+                <div class="estatisticas">
+                  ${golsHtml}
+                  ${assistHtml}
+                  ${cartoesHtml}
+                </div>
+              `;
+
 
 
             modal.style.display = "block";
