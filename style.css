@@ -290,3 +290,17 @@ h1 {
 .sponsor-logos img:hover {
   opacity: 1; /* destaque ao passar o mouse */
 }
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centraliza */
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.team-logo {
+  max-height: 60px; /* controla tamanho */
+  width: auto;
+  object-fit: contain;
+}
