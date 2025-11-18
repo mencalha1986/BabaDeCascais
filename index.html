@@ -11,13 +11,11 @@
     <option value="">Selecione um time</option>
   </select>
 
-<div class="calendar-nav">
-  <button id="prevMonth">&#9664;</button>
-  <span id="monthLabel"></span>
-  <button id="nextMonth">&#9654;</button>
-</div>
-
-
+  <div class="calendar-nav">
+    <button id="prevMonth">&#9664;</button>
+    <span id="monthLabel"></span>
+    <button id="nextMonth">&#9654;</button>
+  </div>
 
   <div class="calendar" id="calendar"></div>
 
@@ -72,14 +70,12 @@
       const nomeMes = new Date(anoAtual, mesAtual).toLocaleString("pt-PT", { month: "long", year: "numeric" });
       monthLabel.textContent = nomeMes.charAt(0).toUpperCase() + nomeMes.slice(1);
 
-      const primeiroDia = new Date(anoAtual, mesAtual, 1);
       const ultimoDia = new Date(anoAtual, mesAtual + 1, 0);
       const diasNoMes = ultimoDia.getDate();
 
       const time = dadosGlobal.times.find(t => t.nome === nomeTime);
       if (!time) return;
 
-      // preencher dias
       for (let dia = 1; dia <= diasNoMes; dia++) {
         const cell = document.createElement("div");
         cell.className = "day";
@@ -92,33 +88,62 @@
         const dataStr = `${anoAtual}-${String(mesAtual+1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
         const jogosDia = time.jogos.filter(j => j.data === dataStr);
 
-        jogosDia.forEach((jogo, idx) => {
+        jogosDia.forEach((jogo) => {
           const card = document.createElement("div");
-      card.className = "jogo";
-      card.innerHTML = `
-        <span class="linha-jogo">
-          <strong>${jogo.hora}</strong> <span class="local-icon"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#e74c3c">
-  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-</svg>
-</span> ${jogo.local} | <span class="versus">vs ${jogo.adversario}</span>
-        </span>
-      `;
+          card.className = "jogo";
+          card.innerHTML = `
+            <span class="linha-jogo">
+              <strong>${jogo.hora}</strong> 
+              <span class="local-icon">
+                <svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#e74c3c">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+                </svg>
+              </span> ${jogo.local} | <span class="versus">vs ${jogo.adversario}</span>
+            </span>
+          `;
 
-
-        
           const esc = document.createElement("div");
           esc.className = "escalados";
-          esc.innerHTML = `<h4>Escalados:</h4>
-                           <ul>${jogo.escalados.map(p => `<li>${p}</li>`).join("")}</ul>`;
+
+          // SVGs para estatísticas
+          const golSvg = `<svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#2c3e50" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>`;
+          const assistSvg = `<svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#27ae60" viewBox="0 0 24 24"><path d="M12 2L15 8l6 1-4.5 4 1 6-5.5-3-5.5 3 1-6L3 9l6-1z"/></svg>`;
+          const amareloSvg = `<svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#f1c40f" viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="16" rx="2"/></svg>`;
+          const vermelhoSvg = `<svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#e74c3c" viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="16" rx="2"/></svg>`;
+
+          const golsHtml = jogo.gols?.length
+            ? `<div class="stat">${golSvg}<strong> Gols:</strong> ${jogo.gols.join(", ")}</div>`
+            : "";
+
+          const assistHtml = jogo.assistencias?.length
+            ? `<div class="stat">${assistSvg}<strong> Assistências:</strong> ${jogo.assistencias.join(", ")}</div>`
+            : "";
+
+          const cartoesHtml = jogo.cartoes?.length
+            ? `<div class="stat"><strong> Cartões:</strong> ${jogo.cartoes.map(c => {
+                const icon = c.tipo === "vermelho" ? vermelhoSvg : amareloSvg;
+                return `${icon} ${c.jogador}`;
+              }).join(", ")}</div>`
+            : "";
+
+          esc.innerHTML = `
+            <h4>Escalados:</h4>
+            <ul>${jogo.escalados.map(p => `<li>${p}</li>`).join("")}</ul>
+            <div class="estatisticas">
+              ${golsHtml}
+              ${assistHtml}
+              ${cartoesHtml}
+            </div>
+          `;
+
           card.appendChild(esc);
-        
+
           card.addEventListener("click", () => {
             esc.style.display = esc.style.display === "block" ? "none" : "block";
           });
-        
+
           cell.appendChild(card);
         });
-
 
         calendar.appendChild(cell);
       }
