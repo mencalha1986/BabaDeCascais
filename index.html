@@ -156,14 +156,17 @@
             let timesEscolhidosHtml = "";
             if (nomeTime === "Baba Semanal" && jogo.timesEscolhidos?.length) {
               timesEscolhidosHtml = `
-                <h4>Times Escolhidos:</h4>
+              <h4>Times Escolhidos:</h4>
+              <div class="times-container">
                 ${jogo.timesEscolhidos.map(t => `
-                  <div class="time-escolhido">
+                  <div class="time-card">
                     <strong>${t.nomeTime}</strong>
                     <ul>${t.jogadores.map(j => `<li>${j}</li>`).join("")}</ul>
                   </div>
                 `).join("")}
-              `;
+              </div>
+            `;
+
             }
 
                        modalBody.innerHTML = `
