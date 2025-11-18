@@ -158,14 +158,15 @@
               timesEscolhidosHtml = `
               <h4>Times Escolhidos:</h4>
               <div class="times-container">
-                ${jogo.timesEscolhidos.map(t => `
-                  <div class="time-card">
+                ${jogo.timesEscolhidos.map((t, idx) => `
+                  <div class="time-card time-${idx+1}">
                     <strong>${t.nomeTime}</strong>
                     <ul>${t.jogadores.map(j => `<li>${j}</li>`).join("")}</ul>
                   </div>
                 `).join("")}
               </div>
             `;
+
 
             }
 
