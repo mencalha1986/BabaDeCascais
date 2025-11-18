@@ -256,3 +256,37 @@ h1 {
 .time-5 {
   background: linear-gradient(135deg, #9b59b6, #8e44ad); /* roxo */
 }
+.sponsors {
+  margin-top: 30px;
+  padding: 15px 0;
+  background: #f9f9f9; /* discreto */
+  border-top: 1px solid #ddd;
+  text-align: center;
+}
+
+.sponsors h4 {
+  margin-bottom: 10px;
+  color: #34495e;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.sponsor-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px; /* espaçamento entre logos */
+  flex-wrap: wrap; /* quebra linha se não couber */
+}
+
+.sponsor-logos img {
+  max-height: 50px; /* altura uniforme */
+  max-width: 120px;
+  object-fit: contain;
+  opacity: 0.85; /* discreto */
+  transition: opacity 0.3s ease;
+}
+
+.sponsor-logos img:hover {
+  opacity: 1; /* destaque ao passar o mouse */
+}
