@@ -90,10 +90,19 @@
         const cell = document.createElement("div");
         cell.className = "day";
 
-        const num = document.createElement("div");
+       const num = document.createElement("div");
         num.className = "day-number";
-        num.textContent = dia;
+        
+        // pega o dia da semana em português (Domingo, Segunda-feira, etc.)
+        const diaSemana = new Date(anoAtual, mesAtual, dia)
+          .toLocaleString("pt-PT", { weekday: "long" });
+        
+        // capitaliza a primeira letra
+        const diaSemanaFormatado = diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1);
+        
+        num.textContent = `${dia} - ${diaSemanaFormatado}`;
         cell.appendChild(num);
+
 
         const dataStr = `${anoAtual}-${String(mesAtual+1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
         const jogosDia = time.jogos.filter(j => j.data === dataStr);
