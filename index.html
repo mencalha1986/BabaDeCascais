@@ -153,8 +153,13 @@
                 }).join(", ")}</div>`
               : "";
 
+            let adversarioModal = "";
+            if (nomeTime !== "Baba Semanal" && jogo.adversario) {
+              adversarioModal = ` | vs ${jogo.adversario}`;
+            }
+            
             modalBody.innerHTML = `
-              <h2>${jogo.hora} 📍 ${jogo.local} | vs ${jogo.adversario}</h2>
+              <h2>${jogo.hora} 📍 ${jogo.local}${adversarioModal}</h2>
               <h4>Escalados:</h4>
               <ul>${jogo.escalados.map(p => `<li>${p}</li>`).join("")}</ul>
               <div class="estatisticas">
@@ -163,6 +168,7 @@
                 ${cartoesHtml}
               </div>
             `;
+
 
             modal.style.display = "block";
           });
