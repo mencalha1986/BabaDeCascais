@@ -248,12 +248,13 @@ h1 {
   background: linear-gradient(135deg, #27ae60, #1e8449); /* verde */
 }
 .time-3 {
-  background: linear-gradient(135deg, #e74c3c, #c0392b); /* vermelho */
+  background: linear-gradient(135deg, #ffcc80, #ffb74d);
 }
 .time-4 {
   background: linear-gradient(135deg, #f1c40f, #d4ac0d); /* amarelo */
 }
 .time-5 {
   background: linear-gradient(135deg, #9b59b6, #8e44ad); /* roxo */
-}
+};
+
 
