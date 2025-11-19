@@ -38,8 +38,9 @@
     let anoAtual, mesAtual;
 
     async function carregar() {
-      const resp = await fetch("https://babadecascais.blob.core.windows.net/baba/jogos.json");
-      dadosGlobal = await resp.json();
+
+      const resp = await fetch("/data/jogos.json");
+      const dadosGlobal = await resp.json();
 
       const select = document.getElementById("timeSelect");
       dadosGlobal.times.forEach(time => {
