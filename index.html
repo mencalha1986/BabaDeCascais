@@ -39,8 +39,11 @@
 
     async function carregar() {
 
-      const resp = await fetch("/data/jogos.json");
-      const dadosGlobal = await resp.json();
+      let dadosGlobal = null;
+      async function carregar() {
+        const resp = await fetch("/data/jogos.json");
+        const dadosGlobal = await resp.json(); // <-- isso cria uma variável local
+      }
 
       const select = document.getElementById("timeSelect");
       dadosGlobal.times.forEach(time => {
