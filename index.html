@@ -39,8 +39,9 @@
     async function carregar() {
 
      
-        const resp = await fetch("/data/jogos.json");
-        dadosGlobal = await resp.json(); // <-- isso cria uma variável local
+      const resp = await fetch("https://babadecascais.blob.core.windows.net/baba/jogos.json");
+dadosGlobal = await resp.json();
+
       
 
       const select = document.getElementById("timeSelect");
