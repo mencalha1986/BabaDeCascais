@@ -1,8 +1,0 @@
-{
-  "routes": [
-    {
-      "route": "/data/jogos.json",
-      "rewrite": "https://babadecascais.blob.core.windows.net/baba/jogos.json"
-    }
-  ]
-}
